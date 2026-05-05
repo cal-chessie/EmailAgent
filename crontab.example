@@ -1,0 +1,9 @@
+# Solar Agent — Cron Configuration
+# Install reminders checker to run every 5 minutes
+
+# Add to crontab:  crontab -e
+# Reminder checker — every 5 minutes
+*/5 * * * * cd /home/engine/solar-agent && node src/tools/checkReminders.js >> /tmp/solar-agent-reminders.log 2>&1
+
+# Main poll loop — every 30 seconds (run as daemon instead of cron for real-time)
+# node src/main.js  (run via systemd/supervisord in production)

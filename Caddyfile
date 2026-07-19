@@ -1,0 +1,54 @@
+# Caddy reverse proxy config for Solar Agent dashboard
+# Run: caddy run --config Caddyfile
+# Or for production: caddy run --config Caddyfile --adapter caddyfile
+
+:80 {
+    # Redirect all HTTP to HTTPS
+    redirect https://{host}{uri}
+}
+
+# Production HTTPS endpoint
+# Replace YOUR_DOMAIN with your actual domain
+https://solar-agent.yourdomain.com {
+    # TLS certificate (automatically managed by Caddy)
+    tls admin@yourdomain.com
+
+    # Security headers
+    header {
+        X-Frame-Options DENY
+        X-Content-Type-Options nosniff
+        Strict-Transport-Security "max-age=31536000; includeSubDomains"
+        X-XSS-Protection "1; mode=block"
+        Content-Security-Policy "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'"
+    }
+
+    # Rate limiting
+    rate_limit {
+        capacity 100
+        duration 1m
+    }
+
+    # Proxy to dashboard service (runs locally)
+    # Configure upstream in .env: DASHBOARD_PORT=3000
+    reverse_proxy localhost:3000 {
+        # Health check
+        health_uri /health
+        health_interval 10s
+        health_timeout 5s
+    }
+
+    # Optional: basic auth for additional layer
+    # basicauth / {
+    #     dashboard-user JDJhJDEwJEVCV1Q1T1VjSmtXSm9IYS92ZXQ=
+    # }
+
+    log {
+        output file /var/log/solar-agent/access.log
+    }
+}
+
+# Staging/dev endpoint (HTTP only, no TLS)
+http://localhost:3001 {
+    reverse_proxy localhost:3000
+    log stdout
+}

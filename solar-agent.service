@@ -1,0 +1,22 @@
+# Solar Agent — systemd service for production deployment
+
+[Unit]
+Description=Solar Booking & Qualification Agent
+After=network.target
+
+[Service]
+Type=simple
+User=engine
+WorkingDirectory=/home/engine/solar-agent
+ExecStart=/usr/bin/node src/main.js
+Restart=on-failure
+RestartSec=5s
+StandardOutput=append:/tmp/solar-agent.log
+StandardError=append:/tmp/solar-agent-error.log
+Environment=NODE_ENV=production
+
+# Reminders run separately via cron
+# */5 * * * * cd /home/engine/solar-agent && node src/tools/checkReminders.js
+
+[Install]
+WantedBy=multi-user.target

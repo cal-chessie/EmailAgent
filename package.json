@@ -1,0 +1,21 @@
+{
+  "name": "solar-agent",
+  "version": "1.0.0",
+  "description": "Email booking and qualification agent for solar installations",
+  "type": "module",
+  "scripts": {
+    "dev": "node src/main.js",
+    "test": "node src/tools/runTests.js",
+    "simulate": "node src/tools/simulateEmails.js",
+    "reminders": "node src/tools/checkReminders.js",
+    "dashboard": "node src/tools/dashboard.js",
+    "confirm": "node src/tools/confirmationPage.js"
+  },
+  "dependencies": {
+    "googleapis": "^140.0.0",
+    "dotenv": "^16.4.5"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  }
+}

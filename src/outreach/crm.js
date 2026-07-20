@@ -33,8 +33,9 @@ async function rest(path, { method = 'GET', body, headers = {} } = {}) {
 
 /** Priority-ordered decision-maker contacts not yet drafted for this campaign. */
 export async function pickContacts({ campaign, limit = 20, priority = 'A' }) {
+  // Rejected drafts don't burn the contact — only live/sent ones dedupe.
   const drafted = await rest(
-    `outreach_messages?select=contact_id&campaign=eq.${encodeURIComponent(campaign)}`
+    `outreach_messages?select=contact_id&campaign=eq.${encodeURIComponent(campaign)}&status=neq.rejected`
   );
   const excluded = new Set((drafted || []).map((r) => r.contact_id).filter(Boolean));
 

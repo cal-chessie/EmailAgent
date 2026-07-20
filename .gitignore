@@ -28,3 +28,5 @@ Thumbs.db
 *.pem
 *.key
 service-account*.json
+
+supabase/.temp/

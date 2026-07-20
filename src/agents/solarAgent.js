@@ -10,6 +10,7 @@ import { checkCalendarSlots, bookSlot } from '../tools/calendar.js';
 import { appendToSheet } from '../tools/sheets.js';
 import { sendWhatsApp } from '../tools/whatsapp.js';
 import { withRetry } from '../tools/retry.js';
+import { emitBookingEvent } from '../tools/kernel.js';
 import { enqueueDLQ, getDLQ } from '../tools/dlq.js';
 import { isAlreadyProcessed, markProcessed } from '../tools/idempotency.js';
 import { sanitizeHtml, isValidEmail, normalizePhone, validateQualification } from '../tools/sanitize.js';
@@ -156,6 +157,17 @@ async function processEmail(email) {
   // 4. Score the lead
   const leadScore = scoreLead(qualification);
   info('SolarAgent', 'Lead score', { score: leadScore.total, band: leadScore.band.label });
+
+  // 4.5 Emit to the AIOS kernel (refs only, never blocks the booking)
+  emitBookingEvent({
+    emailAddress: email.from,
+    slotStart: booked.start,
+    slotEnd: booked.end,
+    calendarEventId: booked.id,
+    score: leadScore.total,
+    band: leadScore.band.label,
+    leadType: qualification.type || 'unknown',
+  });
 
   // 5. Log to Google Sheets
   await withRetry(

@@ -9,7 +9,8 @@
     "simulate": "node src/tools/simulateEmails.js",
     "reminders": "node src/tools/checkReminders.js",
     "dashboard": "node src/tools/dashboard.js",
-    "confirm": "node src/tools/confirmationPage.js"
+    "confirm": "node src/tools/confirmationPage.js",
+    "outreach": "node src/outreach/cli.js"
   },
   "dependencies": {
     "googleapis": "^140.0.0",

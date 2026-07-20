@@ -12,14 +12,18 @@ export function isValidEmail(email) {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 }
 
-// Normalize phone number to E.164 format (basic)
+// Normalize phone number to E.164 format. Ireland-first: Irish national
+// numbers are 9-10 digits after the leading 0 (mobiles 083/085/086/087/089
+// + 7 digits; landlines 01/02x/04x... + 7). UK national numbers are always
+// 11 digits, so length disambiguates the two.
 export function normalizePhone(phone = '') {
-  const digits = phone.replace(/\D/g, '');
-  if (digits.startsWith('44') && digits.length === 12) {
-    return `+${digits}`;
-  }
-  if (digits.startsWith('0') && digits.length === 11) {
-    return `+44${digits.slice(1)}`;
+  let digits = phone.replace(/\D/g, '');
+  if (digits.startsWith('00')) digits = digits.slice(2); // 00353... → 353...
+  if (digits.startsWith('353')) return `+${digits}`;
+  if (digits.startsWith('44') && digits.length === 12) return `+${digits}`;
+  if (digits.startsWith('0')) {
+    if (digits.length === 11) return `+44${digits.slice(1)}`;             // UK national (07x/02x + 9)
+    if (digits.length >= 9 && digits.length <= 10) return `+353${digits.slice(1)}`; // IE national
   }
   return digits.length >= 10 ? `+${digits}` : phone;
 }

@@ -50,13 +50,13 @@ export function scoreLead(qualification) {
 
 function scoreBill(bill) {
   if (!bill) return 0;
-  // Extract numeric value from "£180/month" or "£4,200"
+  // Extract numeric value from "€180/month" or "€4,200"
   const num = parseFloat(String(bill).replace(/[^0-9.]/g, ''));
   if (isNaN(num)) return 0;
 
   // Domestic: 0-50=low, 51-150=mid, 151-300=high, 300+=very high
   // Commercial: assume commercial bill is typically 10x domestic scale
-  // We score on absolute £ so a £4,200/mo commercial warehouse is very high value
+  // We score on absolute € so a €4,200/mo commercial warehouse is very high value
   if (num >= 500)  return 100;
   if (num >= 200)  return 80;
   if (num >= 100)  return 60;

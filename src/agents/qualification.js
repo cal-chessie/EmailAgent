@@ -31,7 +31,7 @@ Reply with JSON (no markdown):
   "phone": "extracted phone or null",
   "type": "domestic" | "commercial" | "unknown",
   "property": "brief property description or null",
-  "bill": "monthly electricity bill in £ or null",
+  "bill": "monthly electricity bill in € or null",
   "timeline": "eager" | "considering" | "browsing" | "unknown",
   "notes": "any other relevant context"
 }
@@ -62,7 +62,7 @@ Body: ${body}
 const QUESTION_MAP = {
   name: 'What is your full name?',
   type: 'Is this a domestic or commercial property?',
-  bill: 'What is your approximate monthly electricity bill (£)?',
+  bill: 'What is your approximate monthly electricity bill (€)?',
   timeline: 'When are you looking to install — within 3 months, 3–6 months, or later?',
   phone: 'Could you share your phone number for a WhatsApp reminder?',
 };
@@ -160,7 +160,7 @@ Reply with JSON only (no markdown):
   "phone": "extracted or null",
   "type": "domestic" | "commercial" | null",
   "property": "brief description or null",
-  "bill": "monthly electricity bill in £ or null",
+  "bill": "monthly electricity bill in € or null",
   "timeline": "eager" | "considering" | "browsing" | null",
   "notes": "any other relevant info"
 }

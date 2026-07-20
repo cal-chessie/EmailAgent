@@ -6,31 +6,31 @@ import { scoreLead, SCORING_BANDS } from './leadScoring.js';
 const TEST_CASES = [
   {
     label: 'Jane — domestic, high bill, eager, south-facing roof',
-    data: { name: 'Jane', phone: '+447700900001', type: 'domestic', bill: '£180/month', timeline: 'eager', property: '3-bed semi, south-facing roof' },
+    data: { name: 'Jane', phone: '+447700900001', type: 'domestic', bill: '€180/month', timeline: 'eager', property: '3-bed semi, south-facing roof' },
     expectBand: 'hot',
     expectMin: 80,
   },
   {
     label: 'Warehouse — commercial, huge bill, considering',
-    data: { name: 'Warehouse Ops', phone: null, type: 'commercial', bill: '£4,200/month', timeline: 'considering', property: '50,000 sq ft warehouse' },
+    data: { name: 'Warehouse Ops', phone: null, type: 'commercial', bill: '€4,200/month', timeline: 'considering', property: '50,000 sq ft warehouse' },
     expectBand: 'hot',
     expectMin: 80,
   },
   {
     label: 'Dave — domestic, mid bill, browsing, no detail',
-    data: { name: 'Dave Bloggs', phone: null, type: 'domestic', bill: '£110/month', timeline: 'browsing', property: '3-bed semi' },
+    data: { name: 'Dave Bloggs', phone: null, type: 'domestic', bill: '€110/month', timeline: 'browsing', property: '3-bed semi' },
     expectBand: 'warm',
     expectMin: 50,
   },
   {
     label: 'Minimal — no phone, no property, browsing, low bill',
-    data: { name: 'Unknown', phone: null, type: 'unknown', bill: '£30/month', timeline: 'browsing', property: null },
+    data: { name: 'Unknown', phone: null, type: 'unknown', bill: '€30/month', timeline: 'browsing', property: null },
     expectBand: 'cool',
     expectMin: 20,
   },
   {
     label: 'North-facing roof — negative property signal',
-    data: { name: 'Bob', phone: null, type: 'domestic', bill: '£150/month', timeline: 'eager', property: '3-bed semi, north-facing roof' },
+    data: { name: 'Bob', phone: null, type: 'domestic', bill: '€150/month', timeline: 'eager', property: '3-bed semi, north-facing roof' },
     expectBand: 'warm',
     expectMin: 50,
   },

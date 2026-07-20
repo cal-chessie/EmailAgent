@@ -78,8 +78,8 @@ Bill: ${qualification.bill || 'TBC'}
 Timeline: ${qualification.timeline || 'TBC'}
 Original email: ${email.subject}
     `.trim(),
-    start: { dateTime: slot.start, timeZone: 'Europe/London' },
-    end: { dateTime: slot.end, timeZone: 'Europe/London' },
+    start: { dateTime: slot.start, timeZone: 'Europe/Dublin' },
+    end: { dateTime: slot.end, timeZone: 'Europe/Dublin' },
     attendees: [{ email: email.from }],
     reminders: {
       useDefault: false,
